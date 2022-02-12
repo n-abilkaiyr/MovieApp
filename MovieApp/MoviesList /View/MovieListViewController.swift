@@ -7,53 +7,59 @@
 
 import UIKit
 
-class MoviesListViewController: UITableViewController  {
-    
-   
+class MovieListViewController: UITableViewController  {
     private var listViewModel: MovieListViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        configureViews()
         
         listViewModel = MovieListViewModel()
-        listViewModel.fetchMovies(by: .nowPlaying) {
-            self.tableView.reloadRows(at: <#T##[IndexPath]#>, with: .automatic)
-        }
+        listViewModel.fetchMovies() { self.tableView.reloadData() }
     }
     
+ 
     
-  private let viewModel = MoviesTableViewCellViewModel(
-    collectionViewCellViewModels: [
-    MoviesCollectionViewCellViewModel(name: "Apple", backgroundColor: .gray),
-    MoviesCollectionViewCellViewModel(name: "Google", backgroundColor: .brown),
-    MoviesCollectionViewCellViewModel(name: "Facebook", backgroundColor: .blue),
-    MoviesCollectionViewCellViewModel(name: "Amazon", backgroundColor: .black),
-    MoviesCollectionViewCellViewModel(name: "Netflix", backgroundColor: .red),
-  ])
-    
-    private func configure() {
+    private func configureViews() {
+        view.backgroundColor = .systemBackground
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 200
-        tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identidier) 
-        title = "Table View"
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        
+        title = "Фильмы"
         navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .systemBackground
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     }
     
 }
 
 // MARK: - UITableViewDataSource
-extension MoviesListViewController {
+extension MovieListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         listViewModel.numberOfRows
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identidier, for: indexPath) as! MoviesTableViewCell
-        cell.configure(with: viewModel)
+        let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
+        
+        let movieStatus = MovieStatus.getStatus(by: indexPath.row)
+        cell.cellViewModel = listViewModel.cellViewModel(with: movieStatus)
         
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension MovieListViewController {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.row == MovieStatus.nowPlaying.position {
+            return tableView.bounds.height * 0.45
+        }
+        return tableView.bounds.height * 0.25
     }
 }

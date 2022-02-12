@@ -7,6 +7,18 @@
 
 import Foundation
 
+enum MovieError: Error {
+    case decodingError
+    case fetchingEror
+    
+    var description: String {
+        switch self {
+        case .fetchingEror: return  "Error happens when fetching data."
+        case .decodingError: return "Error happens when decoding data."
+        }
+    }
+}
+
 struct ErrorData: Decodable {
     let code: String
     let message: String
@@ -16,3 +28,4 @@ struct ErrorData: Decodable {
         case message = "status_message"
     }
 }
+

@@ -7,8 +7,10 @@
 
 import Foundation
 
-protocol MoviesTableViewCellViewModelProtocol {
-    var status: MovieStatus { get set }
+protocol MovieTableViewCellViewModelProtocol {
+    var movies: [Movie] { get set }
+    var status: MovieStatus! { get }
     var statusName: String { get }
-    init(movies: [Movie])
+    init(movies: [Movie], status: MovieStatus)
+    func collectionCellViewModel(for indexPath: IndexPath) -> MovieCollectionViewCellViewModelProtocol?
 }
