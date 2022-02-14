@@ -64,13 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
             endingLineNumber = "109"
-<<<<<<< HEAD
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
-=======
-            landmarkName = "unknown"
-            landmarkType = "0">
->>>>>>> main
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -85,13 +80,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "106"
             endingLineNumber = "106"
-<<<<<<< HEAD
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
-=======
-            landmarkName = "unknown"
-            landmarkType = "0">
->>>>>>> main
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -112,8 +112,6 @@ extension MovieTableViewCell: UICollectionViewDataSource {
         
         return cell
     }
-    
-
 }
 
 // MARK: - UICollectionViewDataSource
