@@ -32,7 +32,6 @@ class MovieTableViewCell: UITableViewCell {
     
     private lazy var wrapperView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
         return view
     }()
     
@@ -43,8 +42,7 @@ class MovieTableViewCell: UITableViewCell {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-//        collectionView.backgroundColor = Color.backgroundColor
-        collectionView.backgroundColor = UIColor.black
+        collectionView.backgroundColor = Color.backgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -58,7 +56,7 @@ class MovieTableViewCell: UITableViewCell {
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.spacing = 8
-        stackView.backgroundColor = .green
+        stackView.backgroundColor =  Color.backgroundColor
         return stackView
     }()
     
@@ -114,8 +112,6 @@ extension MovieTableViewCell: UICollectionViewDataSource {
         
         return cell
     }
-    
-
 }
 
 // MARK: - UICollectionViewDataSource

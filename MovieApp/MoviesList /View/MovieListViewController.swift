@@ -28,7 +28,7 @@ class MovieListViewController: UITableViewController  {
         tableView.rowHeight = 200
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         tableView.separatorStyle = .none
-        
+        tableView.allowsSelection = false
         title = "Фильмы"
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -40,7 +40,6 @@ class MovieListViewController: UITableViewController  {
 extension MovieListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         listViewModel.numberOfRows
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +47,6 @@ extension MovieListViewController {
         
         let movieStatus = MovieStatus.getStatus(by: indexPath.row)
         cell.cellViewModel = listViewModel.cellViewModel(with: movieStatus)
-        
         return cell
     }
 }
