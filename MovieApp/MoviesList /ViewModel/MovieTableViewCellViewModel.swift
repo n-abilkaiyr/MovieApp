@@ -26,5 +26,10 @@ class MovieTableViewCellViewModel: MovieTableViewCellViewModelProtocol {
         return MovieCollectionViewCellViewModel(movie: movie, status: status)
     }
     
+    func viewModelForSelectedItem(selectedRow: Int) -> DetailMovieViewControllerViewModelProtocol {
+        let selectedMovieId = movies[selectedRow].id
+        let detailMoviewViewModel = DetailMovieViewControllerViewModel(id: selectedMovieId)
+        return detailMoviewViewModel
+    }
     
 }

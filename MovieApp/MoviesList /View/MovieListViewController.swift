@@ -7,33 +7,47 @@
 
 import UIKit
 
-class MovieListViewController: UITableViewController  {
+protocol MovieListViewModelProtocol {
+    var moveDict: [MovieStatus : [Movie]] { get set}
+    func fetchMovies (completion: @escaping () -> Void)
+    var numberOfRows: Int { get }
+    func cellViewModel(with status: MovieStatus) -> MovieTableViewCellViewModelProtocol?
+}
+
+
+final class MovieListViewController: UITableViewController  {
     private var listViewModel: MovieListViewModelProtocol!
+    
+    init(viewModel: MovieListViewModelProtocol) {
+        self.listViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        
-        listViewModel = MovieListViewModel()
         listViewModel.fetchMovies() { self.tableView.reloadData() }
     }
     
  
-    
     private func configureViews() {
-        view.backgroundColor = .systemBackground
+        title = Title.main
+        view.backgroundColor = Color.backgroundColor
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 200
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
+        tableView.register(type: MovieTableViewCell.self)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        title = "Фильмы"
+        tableView.showsVerticalScrollIndicator = false
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -43,10 +57,12 @@ extension MovieListViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
         
+        let cell = tableView.dequeueReusableCell(withType: MovieTableViewCell.self, for: indexPath)
         let movieStatus = MovieStatus.getStatus(by: indexPath.row)
-        cell.cellViewModel = listViewModel.cellViewModel(with: movieStatus)
+        let viewModel = listViewModel.cellViewModel(with: movieStatus)
+        cell.configure(with: viewModel)
+        cell.delegate = self
         return cell
     }
 }
@@ -54,10 +70,17 @@ extension MovieListViewController {
 // MARK: - UITableViewDelegate
 extension MovieListViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         if indexPath.row == MovieStatus.nowPlaying.position {
             return tableView.bounds.height * 0.45
         }
         return tableView.bounds.height * 0.25
     }
 }
+
+// MARK: - MovieListDelegate
+extension MovieListViewController: MovieListDelegate {
+    func present(viewController: DetailMovieViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+

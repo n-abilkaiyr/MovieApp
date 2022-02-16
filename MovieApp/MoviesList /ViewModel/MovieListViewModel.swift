@@ -7,15 +7,14 @@
 
 import Foundation
 
-class MovieListViewModel: MovieListViewModelProtocol {
+final class MovieListViewModel: MovieListViewModelProtocol {
     
     var moveDict: [MovieStatus : [Movie]] = [
-        .nowPlaying: [Movie](),
-        .topRated: [Movie](),
-        .upcoming: [Movie](),
-        .popular: [Movie]()
+        .nowPlaying: [],
+        .topRated: [],
+        .upcoming: [],
+        .popular: []
     ]
-    
     
     var numberOfRows: Int {
         moveDict.count
@@ -24,13 +23,13 @@ class MovieListViewModel: MovieListViewModelProtocol {
      func fetchMovies(completion: @escaping () -> Void) {
         
         MovieStatus.allCases.forEach { status in
-            NetworkManager.shared.fetchMovie(by: status.rawValue) {[unowned self] result in
+            NetworkManager.shared.fetchMovie(with: status.rawValue, and: MovieResponseData.self) {[unowned self] result in
                 switch result {
-                case .success(let movies):
-                    self.moveDict[status] = movies
+                case .success(let moviesResponse):
+                    self.moveDict[status] = moviesResponse.results
                     completion()
                 case .failure(let error):
-                    // Do it with loader or alert
+                    // Do it with loader or alert later
                     print(error.description)
                 }
             }

@@ -17,7 +17,6 @@ class MovieCollectionViewCellViewModel: MovieCollectionViewCellViewModelProtocol
         self.status = status
     }
     
-    
     func fetchImageData(completeion: @escaping (Data) -> Void) {
         let imageUrl = status == .nowPlaying ? movie.posterImage : movie.backDropImage
         guard let url = imageUrl else { return }
@@ -27,7 +26,7 @@ class MovieCollectionViewCellViewModel: MovieCollectionViewCellViewModelProtocol
     }
     
     var movieName: String {
-        movie.name
+         movie.name
     }
     
     

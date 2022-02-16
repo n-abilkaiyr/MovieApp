@@ -52,14 +52,48 @@ struct MovieResponseData: Decodable {
 }
 
 struct Movie: Decodable {
+    let id: Int
     let name: String
     let posterImage: String?
     let backDropImage: String?
+    let runtime: Int?
+    let releaseData: String?
+    let overview: String
+    let voteAverage: Double
     
+    
+    let genres: [MovieGenre]?
     
     enum CodingKeys: String, CodingKey {
         case posterImage = "poster_path"
         case name = "title"
         case backDropImage = "backdrop_path"
+        case releaseData = "release_date"
+        case voteAverage = "vote_average"
+        case runtime
+        case genres
+        case overview
+        case id
     }
+    
+    var genreText: String {
+        genres?.first?.name ?? "unavailable"
+    }
+   
+    var ratingText: String {
+        let rating = Int(voteAverage)
+        let ratingText = (0..<rating).reduce("") { result, _ in
+            result + "⭐️"
+        }
+        return ratingText
+    }
+    
+    var scoreText: String {
+        guard ratingText.count > 0 else { return "unavailable" }
+        return "\(ratingText.count)/10"
+    }
+}
+
+struct MovieGenre: Decodable {
+    let name: String
 }
