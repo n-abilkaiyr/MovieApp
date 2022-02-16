@@ -50,6 +50,7 @@ class DetailMovieViewController: UIViewController {
         viewModel.fetchMovie {
             print(self.viewModel.rating)
             self.title = self.viewModel.rating
+            print("testing")
         }
         
     }
