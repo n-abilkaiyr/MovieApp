@@ -20,6 +20,7 @@ struct MovieURL {
 struct Font {
     static let bold25 = UIFont.systemFont(ofSize: 25, weight: .bold)
     static let medium15 = UIFont.systemFont(ofSize: 15, weight: .medium)
+    static let regular15 = UIFont.systemFont(ofSize: 15, weight: .regular)
 }
 
 struct Color {
@@ -36,4 +37,5 @@ struct LayoutGuide {
     static let right: CGFloat = 16
     static let top: CGFloat = 20
     static let bottom: CGFloat = 20
+    static let zero: CGFloat = 0
 }

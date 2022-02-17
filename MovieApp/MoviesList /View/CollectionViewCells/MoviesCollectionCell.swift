@@ -66,6 +66,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        activityIndicator.startAnimating()
         movieImage.image = nil
         movieNameLabel.text = nil
     }

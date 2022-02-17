@@ -75,23 +75,6 @@ struct Movie: Decodable {
         case overview
         case id
     }
-    
-    var genreText: String {
-        genres?.first?.name ?? "unavailable"
-    }
-   
-    var ratingText: String {
-        let rating = Int(voteAverage)
-        let ratingText = (0..<rating).reduce("") { result, _ in
-            result + "⭐️"
-        }
-        return ratingText
-    }
-    
-    var scoreText: String {
-        guard ratingText.count > 0 else { return "unavailable" }
-        return "\(ratingText.count)/10"
-    }
 }
 
 struct MovieGenre: Decodable {
