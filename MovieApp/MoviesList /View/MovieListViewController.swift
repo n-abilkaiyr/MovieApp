@@ -73,7 +73,7 @@ extension MovieListViewController {
         if indexPath.row == MovieStatus.nowPlaying.position {
             return tableView.bounds.height * 0.45
         }
-        return tableView.bounds.height * 0.25
+        return tableView.bounds.height * 0.3
     }
 }
 

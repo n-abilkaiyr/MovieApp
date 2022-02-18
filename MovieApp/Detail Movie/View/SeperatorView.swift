@@ -7,8 +7,13 @@
 
 import UIKit
 
-class SeperatorView: UIView {
+final class SeperatorView: UIView {
     
+    private lazy var seperatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -19,10 +24,17 @@ class SeperatorView: UIView {
     }
     
     private func setup() {
+        addSubview(seperatorView)
         translatesAutoresizingMaskIntoConstraints = false
+        seperatorView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 20)
+            heightAnchor.constraint(equalToConstant: 1),
+            
+            seperatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutGuide.left),
+            seperatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -LayoutGuide.right),
+            seperatorView.topAnchor.constraint(equalTo: topAnchor),
+            seperatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 }

@@ -61,8 +61,9 @@ struct Movie: Decodable {
     let overview: String
     let voteAverage: Double
     
-    
+    let credits: Credits?
     let genres: [MovieGenre]?
+    let videos: VideoResponse?
     
     enum CodingKeys: String, CodingKey {
         case posterImage = "poster_path"
@@ -74,7 +75,36 @@ struct Movie: Decodable {
         case genres
         case overview
         case id
+        case credits
+        case videos
     }
+}
+
+struct VideoResponse: Decodable {
+    let results: [Video]
+}
+struct Video: Decodable {
+    let key: String
+    let id: String
+    let site: String
+    let name: String
+}
+
+struct Credits: Decodable {
+    let cast: [Cast]
+    let crew: [Crew]
+}
+
+struct Cast: Decodable {
+    let id: Int
+    let name: String
+    let character: String
+}
+
+struct Crew: Decodable {
+    let id: Int
+    let name: String
+    let job: String
 }
 
 struct MovieGenre: Decodable {

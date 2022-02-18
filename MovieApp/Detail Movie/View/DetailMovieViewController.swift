@@ -6,14 +6,14 @@
 //
 
 import UIKit
+import SafariServices
 
 final class DetailMovieViewController: UIViewController {
     
     private var viewModel: DetailMovieViewControllerViewModelProtocol
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .systemBlue
+        scrollView.backgroundColor = Color.backgroundColor
         return scrollView
     }()
     
@@ -24,25 +24,36 @@ final class DetailMovieViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var movieInfoStackView: MoviewInfoView = {
-        let sv = MoviewInfoView()
+    private lazy var movieInfoStackView: MoviewInfoStackView = {
+        let sv = MoviewInfoStackView()
         sv.setup()
         return sv
     }()
    
-    private lazy var seperatorView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 110, height: 200))
-        view.backgroundColor = .black
-        return view
+    private lazy var movieCrewStackView: MoviewCrewStackView = {
+        let sv = MoviewCrewStackView()
+        sv.setup()
+        return sv
     }()
     
+    private lazy var trailerStackView: TrailerVStackView = {
+        let sv = TrailerVStackView()
+        sv.setup()
+        return sv
+    }()
+    
+  
     private lazy var mainStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [imageView, movieInfoStackView,seperatorView])
+        let sv = UIStackView(arrangedSubviews: [imageView,
+                                                movieInfoStackView,
+                                                SeperatorView(),
+                                                movieCrewStackView,
+                                                SeperatorView(),
+                                                trailerStackView])
         sv.axis = .vertical
         sv.distribution = .fill
         sv.alignment = .fill
         sv.spacing = 8
-       
         return sv
     }()
     
@@ -51,6 +62,7 @@ final class DetailMovieViewController: UIViewController {
     init(viewModel: DetailMovieViewControllerViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        trailerStackView.completion = { url in self.openVideo(by: url) }
     }
     
     required init?(coder: NSCoder) {
@@ -60,9 +72,11 @@ final class DetailMovieViewController: UIViewController {
    
     
     override func viewDidLoad() {
-        configureViews()
-        
+        self.configureViews()
+        view.backgroundColor = .systemBackground
+
         viewModel.fetchMovie {
+            
             self.updateUI()
             self.viewModel.fetchImageData { data in
                 self.imageView.image = UIImage(data: data)
@@ -71,27 +85,36 @@ final class DetailMovieViewController: UIViewController {
     }
     
     private func updateUI() {
+        title = viewModel.movieName
         movieInfoStackView.updateUI(with: viewModel.genreText,
                                           viewModel.yearText,
                                           viewModel.durationText,
                                           viewModel.overViewText,
                                           viewModel.ratingText,
                                           viewModel.scoreText)
+        
+        movieCrewStackView.updateUI(with: viewModel.crew,
+                                    directors: viewModel.directors,
+                                    producers: viewModel.producers,
+                                    writers: viewModel.writers)
+        
+        trailerStackView.updateUI(with: viewModel.youtubeURLs, and: viewModel.trailerNames)
     }
     
     private func configureViews() {
-        view.backgroundColor = .systemBackground
-        mainStackView.backgroundColor = .cyan
         
         scrollView.addSubview(mainStackView)
         view.addSubview(scrollView)
         
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: Font.bold20]
+        
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,5 +132,12 @@ final class DetailMovieViewController: UIViewController {
             imageView.heightAnchor.constraint(equalToConstant: 200),
         ])
         
+    }
+    
+    private func openVideo(by url: URL) {
+        let config = SFSafariViewController.Configuration()
+        let safariViewController = SFSafariViewController(url: url, configuration: config)
+        safariViewController.modalPresentationStyle = .fullScreen
+        present(safariViewController, animated: true)
     }
 }

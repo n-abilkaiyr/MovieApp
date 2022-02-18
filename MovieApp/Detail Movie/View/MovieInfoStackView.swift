@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class MoviewInfoView: UIStackView {
+final class MoviewInfoStackView: UIStackView {
     private lazy var genreLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.font = Font.regular15
         label.textColor = Color.black
-        label.backgroundColor = .blue
         return label
     }()
     
@@ -22,7 +21,6 @@ final class MoviewInfoView: UIStackView {
         label.numberOfLines = 1
         label.font = Font.regular15
         label.textColor = Color.black
-        label.backgroundColor = .magenta
         label.text = "nurzhan"
         return label
     }()
@@ -38,7 +36,6 @@ final class MoviewInfoView: UIStackView {
     
     private lazy var movieInfoStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [genreLabel, yearLabel, durationLabel])
-        sv.backgroundColor = .green
         sv.axis = .horizontal
         sv.distribution = .fill
         sv.alignment = .fill
@@ -93,9 +90,9 @@ final class MoviewInfoView: UIStackView {
         isLayoutMarginsRelativeArrangement  = true
         layoutMargins = UIEdgeInsets(top: LayoutGuide.zero,
                                      left: LayoutGuide.left,
-                                     bottom: LayoutGuide.zero,
+                                     bottom: LayoutGuide.bottom,
                                      right: LayoutGuide.right)
-        backgroundColor = .red
+        
      }
     
      func updateUI(with values: String... ) {

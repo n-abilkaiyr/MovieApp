@@ -19,6 +19,8 @@ struct MovieURL {
 
 struct Font {
     static let bold25 = UIFont.systemFont(ofSize: 25, weight: .bold)
+    static let bold20 = UIFont.systemFont(ofSize: 20, weight: .bold)
+    static let bold15 = UIFont.systemFont(ofSize: 15, weight: .bold)
     static let medium15 = UIFont.systemFont(ofSize: 15, weight: .medium)
     static let regular15 = UIFont.systemFont(ofSize: 15, weight: .regular)
 }
@@ -35,7 +37,7 @@ struct Title {
 struct LayoutGuide {
     static let left: CGFloat = 16
     static let right: CGFloat = 16
-    static let top: CGFloat = 20
-    static let bottom: CGFloat = 20
+    static let top: CGFloat = 16
+    static let bottom: CGFloat = 16
     static let zero: CGFloat = 0
 }
