@@ -72,11 +72,9 @@ final class DetailMovieViewController: UIViewController {
    
     
     override func viewDidLoad() {
-        self.configureViews()
         view.backgroundColor = .systemBackground
-
         viewModel.fetchMovie {
-            
+            self.configureViews()
             self.updateUI()
             self.viewModel.fetchImageData { data in
                 self.imageView.image = UIImage(data: data)

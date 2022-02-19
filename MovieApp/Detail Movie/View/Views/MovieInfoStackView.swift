@@ -21,7 +21,6 @@ final class MoviewInfoStackView: UIStackView {
         label.numberOfLines = 1
         label.font = Font.regular15
         label.textColor = Color.black
-        label.text = "nurzhan"
         return label
     }()
 
