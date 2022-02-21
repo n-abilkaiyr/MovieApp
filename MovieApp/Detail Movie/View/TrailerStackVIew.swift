@@ -8,10 +8,10 @@
 import UIKit
 
 class TrailerVStackView: UIStackView {
-    
-    private var trailerURLs:[URL] = []
+
+    private var trailerURLs: [URL] = []
     private var names: [String] = []
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Трейлеры"
@@ -19,15 +19,14 @@ class TrailerVStackView: UIStackView {
         label.textColor = Color.black
         return label
     }()
-    
-    
+
     func updateUI(with urls: [URL], and names: [String]) {
-        
+
     }
-    
+
     func setup() {
         addArrangedSubview(titleLabel)
-        
+
         axis = .vertical
         distribution = .fill
         alignment = .fill
@@ -42,4 +41,3 @@ class TrailerVStackView: UIStackView {
 }
 
 // MARK: - UITableViewDataSource
-

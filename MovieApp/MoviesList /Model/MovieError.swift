@@ -10,7 +10,7 @@ import Foundation
 enum MovieError: Error {
     case decodingError
     case fetchingEror
-    
+
     var description: String {
         switch self {
         case .fetchingEror: return  "Error happens when fetching data."
@@ -22,10 +22,9 @@ enum MovieError: Error {
 struct ErrorData: Decodable {
     let code: String
     let message: String
-    
+
     enum CodingKeys: String, CodingKey {
         case code = "status_code"
         case message = "status_message"
     }
 }
-

@@ -12,7 +12,7 @@ enum MovieStatus: String, CaseIterable {
     case topRated = "top_rated"
     case upcoming
     case popular
-    
+
     var description: String {
         switch self {
         case .nowPlaying: return "В Показе"
@@ -21,16 +21,16 @@ enum MovieStatus: String, CaseIterable {
         case .popular: return "Популярные"
         }
     }
-    
+
     var position: Int {
         switch self {
-        case .nowPlaying: return 0 
+        case .nowPlaying: return 0
         case .topRated: return 1
         case .upcoming: return 2
         case .popular: return 3
         }
     }
-    
+
     static func getStatus(by row: Int) -> MovieStatus {
         switch row {
         case 0: return .nowPlaying
@@ -60,11 +60,11 @@ struct Movie: Decodable {
     let releaseData: String?
     let overview: String
     let voteAverage: Double
-    
+
     let credits: Credits?
     let genres: [MovieGenre]?
     let videos: VideoResponse?
-    
+
     enum CodingKeys: String, CodingKey {
         case posterImage = "poster_path"
         case name = "title"

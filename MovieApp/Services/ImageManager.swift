@@ -9,14 +9,14 @@ import Foundation
 import Moya
 class ImageManager {
     static let shared = ImageManager()
-    
+
     private let imageCache = NSCache<NSString, NSData>()
-    private let movieProvider = MoyaProvider<movieService>()
-    
+    private let movieProvider = MoyaProvider<MovieService>()
+
     private init() {}
-    
+
     func fetchImageData(from url: String, completion: @escaping (Data) -> Void) {
-        
+
         if let cachedImage = imageCache.object(forKey: NSString(string: url)) {
             completion(cachedImage as Data)
         } else {
@@ -32,5 +32,5 @@ class ImageManager {
             }
         }
     }
-    
+
 }

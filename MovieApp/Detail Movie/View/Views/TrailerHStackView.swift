@@ -10,7 +10,7 @@ import UIKit
 final class TrailerHStackView: UIStackView {
     var urlToVideo: URL?
     var completion: ((URL) -> Void)?
-    
+
     private lazy var trailerLabel: UILabel = {
         let label = UILabel()
         label.textColor = Color.black
@@ -18,7 +18,7 @@ final class TrailerHStackView: UIStackView {
         label.numberOfLines = 0
         return label
     }()
-    
+
     private lazy var playImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -26,23 +26,23 @@ final class TrailerHStackView: UIStackView {
         imageView.tintColor = .systemBlue
         return imageView
     }()
-    
+
     private lazy var wrapperView: UIView = {
         let view = UIView()
         return view
     }()
-    
+
     init() {
         super.init(frame: .zero)
         setup()
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
-        
+
         addArrangedSubview(trailerLabel)
         addArrangedSubview(playImageView)
 
@@ -50,7 +50,7 @@ final class TrailerHStackView: UIStackView {
         distribution = .fill
         alignment = .center
         spacing = 30
-        
+
         let gesture = UITapGestureRecognizer(target: self, action: #selector(trailerTapped))
         addGestureRecognizer(gesture)
         playImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,17 +59,17 @@ final class TrailerHStackView: UIStackView {
             playImageView.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
-    
+
     func updateUI(with name: String, and url: URL ) {
         self.urlToVideo = url
         trailerLabel.text = name
     }
-    
+
     @objc private func trailerTapped() {
         animateView()
-        
+
     }
-    
+
     private func animateView() {
         UIView.animate(withDuration: 0.2) {
             self.superview?.backgroundColor = .lightGray.withAlphaComponent(0.5)

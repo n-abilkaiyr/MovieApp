@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 struct APIkey {
     static let key = "ae7bab04e1ae64802a49d922b9effcc1"
 }

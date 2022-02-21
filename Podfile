@@ -7,5 +7,7 @@ target 'MovieApp' do
 
   # Pods for MovieApp
     pod 'Moya', '~> 15.0'
+    pod 'SwiftLint'
+
 
 end

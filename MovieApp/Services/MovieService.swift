@@ -8,22 +8,22 @@
 import Foundation
 import Moya
 
-enum movieService {
+enum MovieService {
     case fetchMovies(status: MovieStatus)
     case fetchMovieDetail(id: Int)
     case fetchImage(imageURL: String)
 }
 
-extension movieService: TargetType {
+extension MovieService: TargetType {
     var baseURL: URL {
         switch self {
-        case .fetchMovies(_), .fetchMovieDetail(_):
+        case .fetchMovies, .fetchMovieDetail:
             return  URL(string: MovieURL.base)!
-        case .fetchImage(_):
+        case .fetchImage:
             return URL(string: MovieURL.baseImage)!
         }
     }
-    
+
     var path: String {
         switch self {
         case .fetchMovies(status: let status):
@@ -34,11 +34,11 @@ extension movieService: TargetType {
             return "/\(url)"
         }
     }
-    
+
     var method: Moya.Method {
         .get
     }
-    
+
     var task: Task {
         switch self {
         case .fetchMovies(status: _):
@@ -54,9 +54,9 @@ extension movieService: TargetType {
             return .requestPlain
         }
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         ["Content-Type": "application/json"]
     }
-    
+
 }
