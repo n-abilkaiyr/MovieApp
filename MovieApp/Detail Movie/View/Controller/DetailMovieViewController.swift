@@ -11,6 +11,7 @@ import SafariServices
 final class DetailMovieViewController: UIViewController {
     
     private var viewModel: DetailMovieViewControllerViewModelProtocol
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = Color.backgroundColor
@@ -72,7 +73,7 @@ final class DetailMovieViewController: UIViewController {
    
     
     override func viewDidLoad() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Color.backgroundColor
         viewModel.fetchMovie {
             self.configureViews()
             self.updateUI()

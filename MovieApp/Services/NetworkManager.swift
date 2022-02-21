@@ -6,45 +6,48 @@
 //
 
 import Foundation
+import Moya
 class NetworkManager {
+    
     static let shared = NetworkManager()
+    private let movieProvider = MoyaProvider<movieService>()
     private init() {}
     
-    
-    func fetchMovie<T, M: Decodable>(with endpoint: T, and type: M.Type, completion: @escaping (Result<M, MovieError>) -> Void) {
-        let urlString = "\(MovieURL.base)/movie/\(endpoint)?api_key=\(APIkey.key)&language=\(MovieLanguage.russian.rawValue)&append_to_response=videos,credits"
-        
-        guard let url = URL(string: urlString) else { return }
-        
-        
-        // Do it with MOYA
-        URLSession.shared.dataTask(with: url) { data, _, error  in
-            if error != nil {
-                let movieError = MovieError.fetchingEror
-                completion(.failure(movieError))
+    func fetchMovies(by status: MovieStatus, completion: @escaping ([Movie]) -> Void) {
+        movieProvider.request(.fetchMovies(status: status)) { result in
+            switch result {
+            case .success(let response):
+                guard let movieResponse =  self.parseJSON(from: response.data, to: MovieResponseData.self) else { return }
+                completion(movieResponse.results)
+                
+            case .failure(let moyaError):
+                print(moyaError.localizedDescription)
             }
-            
-            if let data = data,
-               let decodedData = self.parseJSON(from: data, to: M.self) {
-                    DispatchQueue.main.async {
-                        completion(.success(decodedData))
-                    }
-            } else {
-                let movieError = MovieError.decodingError
-                DispatchQueue.main.async {
-                    completion(.failure(movieError))
-                }
-            }
-        }.resume()
+        }
     }
     
+    func fetchMovie(by id: Int, completion: @escaping (Movie) -> Void) {
+        movieProvider.request(.fetchMovieDetail(id: id)) { [unowned self] result in
+            switch result {
+            case .success(let response):
+                guard let movie = self.parseJSON(from: response.data, to: Movie.self) else { return }
+                completion(movie)
+            case .failure(let moyaError):
+                print(moyaError.localizedDescription)
+            }
+        }
+    }
     
     private func parseJSON<T: Decodable>(from data: Data, to: T.Type) -> T? {
         do {
             let movieResponseData = try JSONDecoder().decode(T.self, from: data)
             return movieResponseData
         } catch {
+            print("Error in decoding data")
             return nil
         }
     }
+    
+    
+   
 }

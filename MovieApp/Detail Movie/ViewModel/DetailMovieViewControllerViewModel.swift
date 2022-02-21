@@ -108,14 +108,9 @@ final class DetailMovieViewControllerViewModel: DetailMovieViewControllerViewMod
     }
     
     func fetchMovie(completion: @escaping () -> Void) {
-        NetworkManager.shared.fetchMovie(with: movieId, and: Movie.self) { result in
-            switch result {
-            case .success(let movie):
-                self.movie = movie
-                completion()
-            case .failure(let error):
-                print(error.description)
-            }
+        NetworkManager.shared.fetchMovie(by: movieId) { [unowned self] movie in
+            self.movie = movie
+            completion()
         }
     }
     

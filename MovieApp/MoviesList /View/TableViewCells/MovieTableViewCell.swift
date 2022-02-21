@@ -15,9 +15,7 @@ protocol MovieTableViewCellViewModelProtocol {
     func viewModelForSelectedItem(selectedRow: Int) -> DetailMovieViewControllerViewModelProtocol
 }
 
-protocol MovieListDelegate: AnyObject {
-    func present(viewController: DetailMovieViewController)
-}
+
 
 
 final class MovieTableViewCell: UITableViewCell {

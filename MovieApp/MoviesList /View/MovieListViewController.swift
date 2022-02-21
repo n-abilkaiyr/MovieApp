@@ -7,13 +7,10 @@
 
 import UIKit
 
-protocol MovieListViewModelProtocol {
-    var moveDict: [MovieStatus : [Movie]] { get set}
-    func fetchMovies (completion: @escaping () -> Void)
-    var numberOfRows: Int { get }
-    func cellViewModel(with status: MovieStatus) -> MovieTableViewCellViewModelProtocol?
-}
 
+protocol MovieListDelegate: AnyObject {
+    func present(viewController: DetailMovieViewController)
+}
 
 final class MovieListViewController: UITableViewController  {
     private var listViewModel: MovieListViewModelProtocol!
@@ -31,7 +28,7 @@ final class MovieListViewController: UITableViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        listViewModel.fetchMovies() { self.tableView.reloadData() }
+        listViewModel.fetchMovies { self.tableView.reloadData() }
     }
     
  
