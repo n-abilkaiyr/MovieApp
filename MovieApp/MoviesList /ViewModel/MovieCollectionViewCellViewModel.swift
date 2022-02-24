@@ -26,7 +26,7 @@ class MovieCollectionViewCellViewModel: MovieCollectionViewCellViewModelProtocol
     }
 
     var movieName: String {
-         movie.name
+        return movie.name
     }
 
 }

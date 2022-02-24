@@ -88,18 +88,16 @@ final class DetailMovieViewControllerViewModel: DetailMovieViewControllerViewMod
         let writers = credits.crew.filter { $0.job == "Writer"}.map {$0.name}
         return writers.isEmpty ? ["n/a"] : writers
     }
-
+  
     var youtubeURLs: [URL] {
         var urls: [URL] = []
         guard let videos = movie.videos?.results else { return urls }
         urls = videos.filter {$0.site == "YouTube"}.map {URL(string: "https://youtube.com/watch?v=\($0.key)")!}
-
         return urls
     }
 
     var trailerNames: [String] {
         guard let videos = movie.videos?.results else { return [] }
-
         return videos.map { $0.name }
     }
 

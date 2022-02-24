@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -33,6 +33,9 @@
 		74AECA7627BF990900B5D32E /* TrailerHStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AECA7527BF990900B5D32E /* TrailerHStackView.swift */; };
 		74AECA7827BFB0C800B5D32E /* WrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AECA7727BFB0C800B5D32E /* WrapperView.swift */; };
 		74B6616427BBA78800DA1143 /* DetailMovieViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B6616327BBA78800DA1143 /* DetailMovieViewControllerViewModel.swift */; };
+		74BC992E27C7694500052151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74BC992D27C7694500052151 /* GoogleService-Info.plist */; };
+		74BC993127C76D2400052151 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 74BC993027C76D2400052151 /* FirebaseAnalytics */; };
+		74BC993327C76D2400052151 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 74BC993227C76D2400052151 /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,7 @@
 		74AECA7527BF990900B5D32E /* TrailerHStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerHStackView.swift; sourceTree = "<group>"; };
 		74AECA7727BFB0C800B5D32E /* WrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperView.swift; sourceTree = "<group>"; };
 		74B6616327BBA78800DA1143 /* DetailMovieViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieViewControllerViewModel.swift; sourceTree = "<group>"; };
+		74BC992D27C7694500052151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74BC993327C76D2400052151 /* FirebaseCrashlytics in Frameworks */,
+				74BC993127C76D2400052151 /* FirebaseAnalytics in Frameworks */,
 				555ED9638155A8BF54CB8685 /* Pods_MovieApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +151,7 @@
 				74A0F50127B23AD000159242 /* AppDelegate.swift */,
 				74A0F50327B23AD000159242 /* SceneDelegate.swift */,
 				74A0F50F27B23AD200159242 /* Info.plist */,
+				74BC992D27C7694500052151 /* GoogleService-Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -281,12 +288,17 @@
 				74A0F4FB27B23AD000159242 /* Frameworks */,
 				74A0F4FC27B23AD000159242 /* Resources */,
 				9768EB94632CE1807BFEC7BF /* [CP] Embed Pods Frameworks */,
+				74BC993427C76FDD00052151 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MovieApp;
+			packageProductDependencies = (
+				74BC993027C76D2400052151 /* FirebaseAnalytics */,
+				74BC993227C76D2400052151 /* FirebaseCrashlytics */,
+			);
 			productName = MovieApp;
 			productReference = 74A0F4FE27B23AD000159242 /* MovieApp.app */;
 			productType = "com.apple.product-type.application";
@@ -314,6 +326,9 @@
 				Base,
 			);
 			mainGroup = 74A0F4F527B23AD000159242;
+			packageReferences = (
+				74BC992F27C76D2400052151 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 74A0F4FF27B23AD000159242 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -329,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74A0F50B27B23AD200159242 /* Assets.xcassets in Resources */,
+				74BC992E27C7694500052151 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +367,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		74BC993427C76FDD00052151 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		8256481B9A210B187EC022F6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -551,6 +586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = G5P3M2D27A;
 				INFOPLIST_FILE = "MovieApp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -607,6 +643,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		74BC992F27C76D2400052151 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 8.12.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74BC993027C76D2400052151 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74BC992F27C76D2400052151 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		74BC993227C76D2400052151 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74BC992F27C76D2400052151 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 74A0F4F627B23AD000159242 /* Project object */;
 }

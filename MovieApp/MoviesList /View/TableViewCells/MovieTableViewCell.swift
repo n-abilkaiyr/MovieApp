@@ -119,7 +119,7 @@ extension MovieTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension MovieTableViewCell: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let item = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
             item.itemIsSelected {

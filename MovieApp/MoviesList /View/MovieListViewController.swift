@@ -27,7 +27,7 @@ final class MovieListViewController: UITableViewController {
         configureViews()
         listViewModel.fetchMovies { self.tableView.reloadData() }
     }
-
+    
     private func configureViews() {
         title = Title.main
         view.backgroundColor = Color.backgroundColor
