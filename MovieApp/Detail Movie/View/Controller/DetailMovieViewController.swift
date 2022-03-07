@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import SafariServices
+
 
 final class DetailMovieViewController: UIViewController {
-
+    
     private var viewModel: DetailMovieViewControllerViewModelProtocol
 
     private lazy var scrollView: UIScrollView = {
@@ -59,7 +59,7 @@ final class DetailMovieViewController: UIViewController {
     init(viewModel: DetailMovieViewControllerViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        trailerStackView.completion = { url in self.openVideo(by: url) }
+        trailerStackView.completion = { url in self.viewModel.openYoutubeViedo(by: url)}
     }
 
     required init?(coder: NSCoder) {
@@ -124,12 +124,5 @@ final class DetailMovieViewController: UIViewController {
             imageView.heightAnchor.constraint(equalToConstant: 200)
         ])
 
-    }
-
-    private func openVideo(by url: URL) {
-        let config = SFSafariViewController.Configuration()
-        let safariViewController = SFSafariViewController(url: url, configuration: config)
-        safariViewController.modalPresentationStyle = .fullScreen
-        present(safariViewController, animated: true)
     }
 }

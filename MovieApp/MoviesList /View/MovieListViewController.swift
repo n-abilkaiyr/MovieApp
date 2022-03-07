@@ -7,12 +7,9 @@
 
 import UIKit
 
-protocol MovieListDelegate: AnyObject {
-    func present(viewController: DetailMovieViewController)
-}
-
 final class MovieListViewController: UITableViewController {
     private var listViewModel: MovieListViewModelProtocol!
+    
     init(viewModel: MovieListViewModelProtocol) {
         self.listViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -54,7 +51,6 @@ extension MovieListViewController {
         let movieStatus = MovieStatus.getStatus(by: indexPath.row)
         let viewModel = listViewModel.cellViewModel(with: movieStatus)
         cell.configure(with: viewModel)
-        cell.delegate = self
         return cell
     }
 }
@@ -69,9 +65,3 @@ extension MovieListViewController {
     }
 }
 
-// MARK: - MovieListDelegate
-extension MovieListViewController: MovieListDelegate {
-    func present(viewController: DetailMovieViewController) {
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-}

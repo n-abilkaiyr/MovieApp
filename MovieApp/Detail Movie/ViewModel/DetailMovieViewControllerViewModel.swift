@@ -8,6 +8,7 @@
 import Foundation
 
 protocol DetailMovieViewControllerViewModelProtocol {
+    var navigation: TrailerNavigation? { get set }
     var genreText: String { get }
     var yearText: String { get }
     var durationText: String { get }
@@ -23,9 +24,11 @@ protocol DetailMovieViewControllerViewModelProtocol {
     var movieName: String { get }
     func fetchMovie(completion: @escaping () -> Void)
     func fetchImageData(completion: @escaping (Data) -> Void)
+    func openYoutubeViedo(by url: URL)
 }
 
 final class DetailMovieViewControllerViewModel: DetailMovieViewControllerViewModelProtocol {
+    var navigation: TrailerNavigation?
 
     private let movieId: Int
     private var movie: Movie!
@@ -117,6 +120,11 @@ final class DetailMovieViewControllerViewModel: DetailMovieViewControllerViewMod
         ImageManager.shared.fetchImageData(from: imageURL) { data in
             completion(data)
         }
+    }
+    
+    func openYoutubeViedo(by url: URL) {
+        guard let navigation = navigation else { return }
+        navigation.openYoutubeVideo(by: url)
     }
 
 }

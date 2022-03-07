@@ -6,18 +6,8 @@
 //
 
 import UIKit
-protocol MovieTableViewCellViewModelProtocol {
-    var movies: [Movie] { get set }
-    var status: MovieStatus! { get }
-    var statusName: String { get }
-    init(movies: [Movie], status: MovieStatus)
-    func collectionCellViewModel(for indexPath: IndexPath) -> MovieCollectionViewCellViewModelProtocol?
-    func viewModelForSelectedItem(selectedRow: Int) -> DetailMovieViewControllerViewModelProtocol
-}
 
 final class MovieTableViewCell: UITableViewCell {
-
-    weak var delegate: MovieListDelegate?
 
     private var status: MovieStatus?
     private var movies: [Movie] = []
@@ -121,12 +111,10 @@ extension MovieTableViewCell: UICollectionViewDataSource {
 extension MovieTableViewCell: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let item = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
+        if let item = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell,
+           let viewModel =  self.cellViewModel {
             item.itemIsSelected {
-                guard let viewModel =  self.cellViewModel else { return }
-                let detailMovieViewModel = viewModel.viewModelForSelectedItem(selectedRow: indexPath.row)
-                let detailMovieController = DetailMovieViewController(viewModel: detailMovieViewModel)
-                self.delegate?.present(viewController: detailMovieController)
+                viewModel.goToDetailPage(for: indexPath.row)
             }
         }
     }
