@@ -10,21 +10,19 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var appCoordinator : AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
         window = UIWindow(windowScene: windowScene)
-        window?.makeKeyAndVisible()
-        let movieListViewModel = MovieListViewModel()
-        let navController = UINavigationController(rootViewController: MovieListViewController(viewModel: movieListViewModel))
+    
+        let navController = UINavigationController()
+        let appCoordinator = AppCoordinator(navCon: navController)
+        appCoordinator.start()
         window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+        
     }
 
-
-
-
 }
-

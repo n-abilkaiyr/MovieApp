@@ -6,30 +6,31 @@
 //
 
 import Foundation
-
+import Moya
 class ImageManager {
-    let imageCache = NSCache<NSString, NSData>()
     static let shared = ImageManager()
+
+    private let imageCache = NSCache<NSString, NSData>()
+    private let movieProvider = MoyaProvider<MovieService>()
+
     private init() {}
-    
+
     func fetchImageData(from url: String, completion: @escaping (Data) -> Void) {
-        let urlString = "\(MovieURL.baseImage)\(url)"
-        guard let url = URL(string: urlString) else { return }
-        
-        if let cachedImage = imageCache.object(forKey: NSString(string: urlString)) {
+
+        if let cachedImage = imageCache.object(forKey: NSString(string: url)) {
             completion(cachedImage as Data)
         } else {
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self.imageCache.setObject(data as NSData, forKey: urlString as NSString)
-                        completion(data)
-                    }
+            movieProvider.request(.fetchImage(imageURL: url)) { [unowned self] result in
+                switch result {
+                case .success(let response):
+                    let imageData = response.data
+                    completion(imageData)
+                    self.imageCache.setObject(imageData as NSData, forKey: url as NSString)
+                case .failure(let moyaError):
+                    print(moyaError.localizedDescription)
                 }
             }
         }
-        
-        
     }
-    
+
 }
